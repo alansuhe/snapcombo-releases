@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>服务条款 - SnapCombo (简拼出片)</title>
+  <title>服务条款 - SnapCombo (简拼出片) - 模板化短视频快速生成工具</title>
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,6 +43,9 @@
       padding: 2rem 0;
       border-bottom: 1px solid var(--border-card);
       margin-bottom: 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .logo-link {
@@ -64,20 +67,31 @@
       -webkit-text-fill-color: initial;
     }
 
+    .lang-switcher {
+      display: inline-flex;
+      background: rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 2px;
+    }
+    .lang-switcher a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: 0.25rem 0.75rem;
+      border-radius: 18px;
+      font-size: 0.8rem;
+      transition: all 0.2s;
+    }
+    .lang-switcher a.active {
+      background: var(--accent);
+      color: #000;
+    }
+
     h1 {
       font-family: 'Outfit', sans-serif;
       font-size: 2.5rem;
       font-weight: 700;
       margin-bottom: 1.5rem;
       color: var(--text-primary);
-    }
-
-    .update-time {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      margin-bottom: 3rem;
-      border-bottom: 1px solid var(--border-card);
-      padding-bottom: 1rem;
     }
 
     h2 {
@@ -126,15 +140,17 @@
 <body>
 
   <header>
-    <div class="container">
+    <div class="container" style="display:flex; width:100%; justify-content:space-between; align-items:center;">
       <a href="index.html" class="logo-link">SnapCombo</a>
+      <div class="lang-switcher">
+        <a href="terms.html" class="active">中文</a>
+        <a href="en/terms.html" class="">EN</a>
+      </div>
     </div>
   </header>
 
   <main class="container">
     <h1>服务条款</h1>
-    <div class="update-time">最近更新时间：2026年5月20日</div>
-
     <p>欢迎您使用 SnapCombo (简拼出片) 软件及相关服务。本《服务条款》（以下简称“条款”）是您与 SnapCombo 团队之间就下载、安装、使用本软件所订立的法律协议。</p>
 
     <h2>1. 许可授予与使用限制</h2>
@@ -175,7 +191,7 @@
     <p>我们保留随时修改本服务条款的权利。修改后的条款将会在本页面发布并生效。若您在服务条款变更后继续使用本软件，即表示您已阅读、理解并同意接受修改后的服务条款约束。</p>
 
     <footer>
-      <p>&copy; 2026 SnapCombo Studio. All Rights Reserved.</p>
+      <p>© 2026 SnapCombo Studio. All Rights Reserved.</p>
       <div style="margin-top: 1rem;">
         <a href="index.html">返回首页</a> | 
         <a href="support.html">技术支持</a> | 

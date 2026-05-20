@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>技术支持 - SnapCombo (简拼出片)</title>
+  <title>技术支持 - SnapCombo (简拼出片) - 模板化短视频快速生成工具</title>
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,6 +43,9 @@
       padding: 2rem 0;
       border-bottom: 1px solid var(--border-card);
       margin-bottom: 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .logo-link {
@@ -64,6 +67,25 @@
       -webkit-text-fill-color: initial;
     }
 
+    .lang-switcher {
+      display: inline-flex;
+      background: rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 2px;
+    }
+    .lang-switcher a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: 0.25rem 0.75rem;
+      border-radius: 18px;
+      font-size: 0.8rem;
+      transition: all 0.2s;
+    }
+    .lang-switcher a.active {
+      background: var(--accent);
+      color: #000;
+    }
+
     h1 {
       font-family: 'Outfit', sans-serif;
       font-size: 2.5rem;
@@ -78,6 +100,12 @@
       font-weight: 600;
       margin: 2.5rem 0 1rem;
       color: var(--accent);
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      margin: 1.5rem 0 0.5rem;
     }
 
     p {
@@ -148,8 +176,12 @@
 <body>
 
   <header>
-    <div class="container">
+    <div class="container" style="display:flex; width:100%; justify-content:space-between; align-items:center;">
       <a href="index.html" class="logo-link">SnapCombo</a>
+      <div class="lang-switcher">
+        <a href="support.html" class="active">中文</a>
+        <a href="en/support.html" class="">EN</a>
+      </div>
     </div>
   </header>
 
@@ -181,7 +213,7 @@
     </div>
 
     <footer>
-      <p>&copy; 2026 SnapCombo Studio. All Rights Reserved.</p>
+      <p>© 2026 SnapCombo Studio. All Rights Reserved.</p>
       <div style="margin-top: 1rem;">
         <a href="index.html">返回首页</a> | 
         <a href="privacy.html">隐私政策</a> | 
