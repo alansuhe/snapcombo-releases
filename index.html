@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SnapCombo (简拼出片) - 模板化短视频快速生成工具</title>
+  <meta name="description" content="SnapCombo (简拼出片) 是一款面向模板化短视频生产的桌面端工具。选素材，套模板，快出片，让视频创作更简单。">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #090d16;
+      --bg-card: rgba(17, 25, 40, 0.75);
+      --border-card: rgba(255, 255, 255, 0.08);
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --accent: #6ee7ff;
+      --accent-glow: rgba(110, 231, 255, 0.15);
+      --accent-hover: #a5f3fc;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(110, 231, 255, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(110, 231, 255, 0.03) 0%, transparent 50%);
+      background-attachment: fixed;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Header & Navigation */
+    header {
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border-card);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: rgba(9, 13, 22, 0.7);
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo::before {
+      content: '🎬';
+      font-size: 1.3rem;
+    }
+
+    nav a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.95rem;
+      margin-left: 2rem;
+      transition: color 0.2s ease;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 8rem 0 6rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background: rgba(110, 231, 255, 0.06);
+      border: 1px solid rgba(110, 231, 255, 0.15);
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 20px var(--accent-glow);
+    }
+
+    h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 4rem;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -1.5px;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(to bottom, #ffffff 40%, #e2e8f0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h1 span {
+      background: linear-gradient(135deg, var(--accent) 0%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .tagline {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      max-width: 680px;
+      margin: 0 auto 3rem;
+    }
+
+    /* Download Buttons */
+    .download-section {
+      margin-bottom: 4rem;
+    }
+
+    .download-wrapper {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .btn-main {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1.1rem 2.5rem;
+      background: linear-gradient(135deg, var(--accent) 0%, #0284c7 100%);
+      color: #040815;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(110, 231, 255, 0.25);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .btn-main:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 40px rgba(110, 231, 255, 0.35);
+      background: linear-gradient(135deg, var(--accent-hover) 0%, #0ea5e9 100%);
+    }
+
+    .btn-main svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    .other-platforms {
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .platform-link {
+      color: var(--text-primary);
+      text-decoration: none;
+      border-bottom: 1px dotted var(--text-secondary);
+      margin: 0 0.5rem;
+      transition: all 0.2s ease;
+    }
+
+    .platform-link:hover {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* App Preview / Frame */
+    .preview-container {
+      margin-top: 2rem;
+      perspective: 1000px;
+    }
+
+    .preview-frame {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 20px;
+      padding: 1rem;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(20px);
+      max-width: 900px;
+      margin: 0 auto;
+      transform: rotateX(5deg);
+      transition: transform 0.5s ease;
+    }
+
+    .preview-frame:hover {
+      transform: rotateX(0deg);
+    }
+
+    .preview-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #ef4444;
+    }
+    .dot:nth-child(2) { background: #eab308; }
+    .dot:nth-child(3) { background: #22c55e; }
+
+    .preview-content {
+      background: #040711;
+      aspect-ratio: 16/10;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .preview-content::before {
+      content: '';
+      position: absolute;
+      width: 150%;
+      height: 150%;
+      background: linear-gradient(45deg, transparent 45%, rgba(110, 231, 255, 0.04) 50%, transparent 55%);
+      animation: shine 6s infinite linear;
+    }
+
+    @keyframes shine {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    .preview-placeholder-text {
+      text-align: center;
+      z-index: 1;
+    }
+
+    .preview-placeholder-text h3 {
+      color: var(--text-primary);
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Features Section */
+    .features {
+      padding: 6rem 0;
+      border-top: 1px solid var(--border-card);
+    }
+
+    .section-title {
+      font-family: 'Outfit', sans-serif;
+      text-align: center;
+      font-size: 2.25rem;
+      font-weight: 700;
+      margin-bottom: 4rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 16px;
+      padding: 2.5rem;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(8px);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(110, 231, 255, 0.25);
+      box-shadow: 0 10px 30px rgba(110, 231, 255, 0.05);
+    }
+
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      background: rgba(110, 231, 255, 0.08);
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      color: var(--accent);
+    }
+
+    .feature-card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* Footer */
+    footer {
+      padding: 4rem 0 2rem;
+      border-top: 1px solid var(--border-card);
+      background-color: rgba(4, 7, 17, 0.9);
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      margin-right: 1.5rem;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    .copyright {
+      width: 100%;
+      text-align: center;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.03);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.75rem;
+      }
+      .hero {
+        padding: 5rem 0 3rem;
+      }
+      .nav-container {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      nav a {
+        margin: 0 1rem;
+      }
+      .footer-content {
+        flex-direction: column;
+        text-align: center;
+      }
+      .footer-links a {
+        margin: 0 0.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container nav-container">
+      <div class="logo">SnapCombo</div>
+      <nav>
+        <a href="#features">功能特性</a>
+        <a href="support.html">技术支持</a>
+        <a href="privacy.html">隐私政策</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <span class="hero-badge">⚡ 开源极速短视频合成</span>
+      <h1>选素材，套模板，<span>三步快出片</span></h1>
+      <p class="tagline">SnapCombo (简拼出片) 是一款专为商家、运营、自媒体新手打造的桌面视频工具。本地运行，极致性能，摒弃繁琐的剪辑轨道，轻松制作高质量宣传短片。</p>
+      
+      <div class="download-section">
+        <div class="download-wrapper">
+          <a id="main-download-btn" href="#" class="btn-main">
+            <svg viewBox="0 0 24 24">
+              <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/>
+            </svg>
+            <span id="main-download-text">正在识别系统...</span>
+          </a>
+          
+          <div class="other-platforms">
+            其他版本下载:
+            <a id="link-mac-arm" href="https://github.com/alansuhe/snapcombo-releases/releases/download/v0.1.0/SnapCombo_0.1.0_aarch64.dmg" class="platform-link">macOS (Apple Silicon)</a> | 
+            <a id="link-mac-intel" href="https://github.com/alansuhe/snapcombo-releases/releases/download/v0.1.0/SnapCombo_0.1.0_x64.dmg" class="platform-link">macOS (Intel)</a> | 
+            <a id="link-win" href="https://github.com/alansuhe/snapcombo-releases/releases/download/v0.1.0/SnapCombo_0.1.0_x64-setup.exe" class="platform-link">Windows (64位)</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="preview-container">
+        <div class="preview-frame">
+          <div class="preview-header">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </div>
+          <div class="preview-content">
+            <div class="preview-placeholder-text">
+              <h3>🎨 选素材 · 套模板 · 渲染出片</h3>
+              <p>极简的卡片化拼接，本地 Remotion 强力驱动渲染</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" class="features">
+    <div class="container">
+      <h2 class="section-title">核心功能特性</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🧩</div>
+          <h3>按模板搭积木</h3>
+          <p>无需面对繁琐的音视频轨道和时间轴。拖拽排列视频卡片、图片与文案，选择喜欢的视频模板，即可自动排版组合。</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>本地极速渲染</h3>
+          <p>基于 Remotion 引擎进行渲染。不依赖任何云端服务，视频完全在您本地完成合成与导出，零延迟，无隐私泄漏风险。</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🏪</div>
+          <h3>专为创作提效</h3>
+          <p>非常适合电商卖家制作商品主图短视频、实体店老板做朋友圈宣传视频，或是讲师、博主批量生成统一的开场/介绍片头。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div>
+          <div class="logo" style="margin-bottom: 0.5rem;">SnapCombo</div>
+          <p>让出片更简单。</p>
+        </div>
+        <div class="footer-links">
+          <a href="support.html">技术支持</a>
+          <a href="privacy.html">隐私政策</a>
+          <a href="terms.html">服务条款</a>
+        </div>
+      </div>
+      <div class="copyright">
+        &copy; 2026 SnapCombo Studio. All Rights Reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // System detection and main button link binding
+    (function() {
+      var macArmUrl = "https://github.com/alansuhe/snapcombo-releases/releases/download/v0.1.0/SnapCombo_0.1.0_aarch64.dmg";
+      var macIntelUrl = "https://github.com/alansuhe/snapcombo-releases/releases/download/v0.1.0/SnapCombo_0.1.0_x64.dmg";
+      var winUrl = "https://github.com/alansuhe/snapcombo-releases/releases/download/v0.1.0/SnapCombo_0.1.0_x64-setup.exe";
+      
+      var btn = document.getElementById('main-download-btn');
+      var btnText = document.getElementById('main-download-text');
+      
+      var userAgent = window.navigator.userAgent.toLowerCase();
+      var platform = window.navigator.platform.toLowerCase();
+      
+      if (userAgent.indexOf('mac') !== -1 || platform.indexOf('mac') !== -1) {
+        // macOS - check Apple Silicon vs Intel
+        // Simple Apple Silicon heuristic: check if M1/M2 indicator or WebGL renderer contains Apple
+        var isAppleSilicon = false;
+        try {
+          var canvas = document.createElement('canvas');
+          var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+          if (gl) {
+            var debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+            if (debugInfo) {
+              var renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL).toLowerCase();
+              if (renderer.indexOf('apple') !== -1 && renderer.indexOf('intel') === -1) {
+                isAppleSilicon = true;
+              }
+            }
+          }
+        } catch(e) {}
+        
+        if (isAppleSilicon) {
+          btn.href = macArmUrl;
+          btnText.innerText = '下载 macOS 版 (Apple Silicon)';
+        } else {
+          btn.href = macIntelUrl;
+          btnText.innerText = '下载 macOS 版 (Intel)';
+        }
+      } else if (userAgent.indexOf('win') !== -1 || platform.indexOf('win') !== -1) {
+        // Windows
+        btn.href = winUrl;
+        btnText.innerText = '下载 Windows 版';
+      } else {
+        // Fallback to macOS Apple Silicon as default or first link
+        btn.href = macArmUrl;
+        btnText.innerText = '下载 macOS 版 (Apple Silicon)';
+      }
+    })();
+  </script>
+</body>
+</html>
